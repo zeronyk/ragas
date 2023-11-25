@@ -26,6 +26,9 @@ def load_as_json(text):
     try:
         return json.loads(text)
     except ValueError as e:
+        print("\n ######################################################### \n")
+        print(text)
+        print("\n ######################################################### \n")
         warnings.warn(f"Invalid json: {e}")
 
     return {}

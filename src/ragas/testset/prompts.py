@@ -2,16 +2,16 @@ from langchain.prompts import HumanMessagePromptTemplate
 
 SEED_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-Your task is to formulate a question from given context satisfying the rules given below:
-    1.The question should make sense to humans even when read without the given context.
-    2.The question should be fully answered from the given context.
-    3.The question should be framed from a part of context that contains important information. It can also be from tables,code,etc.
-    4.The answer to the question should not contain any links.
-    5.The question should be of moderate difficulty.
-    6.The question must be reasonable and must be understood and responded by humans.
-    7.Do no use phrases like 'provided context',etc in the question
-    8.Avoid framing question using word "and" that can be decomposed into more than one question.
-    9.The question should not contain more than 10 words, make of use of abbreviation wherever possible.
+Deine Aufgabe ist es, eine Frage aus dem gegebenen Kontext zu formulieren, die folgenden Regeln entspricht:
+1. Die Frage sollte für Menschen auch ohne den gegebenen Kontext verständlich sein.
+2. Die Frage sollte vollständig aus dem gegebenen Kontext beantwortet werden können.
+3. Die Frage sollte sich auf einen Teil des Kontextes beziehen, der wichtige Informationen enthält. Sie kann auch aus Tabellen, Code usw. stammen.
+4. Die Antwort auf die Frage darf keine Links enthalten.
+5. Die Frage sollte von mittlerem Schwierigkeitsgrad sein.
+6. Die Frage muss vernünftig sein und von Menschen verstanden und beantwortet werden können.
+7. Verwende keine Ausdrücke wie "gegebener Kontext" in der Frage.
+8. Vermeide die Formulierung von Fragen mit dem Wort "und", die in mehr als eine Frage zerlegt werden können.
+9. Die Frage sollte nicht mehr als 10 Wörter enthalten, verwende Abkürzungen, wo immer möglich.
     
 context:{context}
 """  # noqa: E501
@@ -20,128 +20,129 @@ context:{context}
 
 REASONING_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-You are a prompt rewriter. You will be provided with a question and a long context.Your task to is to complicate the given question to improve the difficulty of answering. 
-You should do complicate the question by rewriting question into a multi-hop reasoning question based on the provided context. The question should require the reader to make multiple logical connections or inferences using the information available in given context. 
-Here are some strategies to create multi-hop questions:
+Du bist ein Prompt-Umschreiber. Dir wird eine Frage und ein langer Kontext zur Verfügung gestellt. Deine Aufgabe ist es, die gegebene Frage zu verkomplizieren, um die Schwierigkeit der Beantwortung zu erhöhen.
+Du sollst die Frage verkomplizieren, indem du sie in eine Frage umschreibst, die auf Mehrfachschlussfolgerungen basiert und sich auf den gegebenen Kontext bezieht. Die Frage sollte den Leser dazu veranlassen, mehrere logische Verbindungen oder Schlussfolgerungen unter Verwendung der im Kontext verfügbaren Informationen zu ziehen.
+Hier sind einige Strategien, um Mehrfachschlussfragen zu erstellen:
 
-   - Bridge related entities: Identify information that relates specific entities and frame question that can be answered only by analysing information of both entities.
-   
-   - Use Pronouns: identify (he, she, it, they) that refer to same entity or concepts in the context, and ask questions that would require the reader to figure out what pronouns refer to.
+    Verbinde verwandte Entitäten: Identifiziere Informationen, die spezifische Entitäten betreffen, und formuliere Fragen, die nur durch die Analyse der Informationen beider Entitäten beantwortet werden können.
 
-   - Refer to Specific Details: Mention specific details or facts from different parts of the context including tables, code, etc and ask how they are related.
+    Verwende Pronomen: Identifiziere Pronomen (er, sie, es, sie), die sich auf dieselbe Entität oder Konzepte im Kontext beziehen, und stelle Fragen, die den Leser dazu bringen, herauszufinden, auf was sich die Pronomen beziehen.
 
-   - Pose Hypothetical Scenarios: Present a hypothetical situation or scenario that requires combining different elements from the context to arrive at an answer.
+    Beziehe dich auf spezifische Details: Erwähne spezifische Details oder Fakten aus verschiedenen Teilen des Kontextes, einschließlich Tabellen, Code usw., und frage, wie sie zusammenhängen.
 
-Rules to follow when rewriting question:
-1. Ensure that the rewritten question can be answered entirely from the information present in the contexts.
-2. Do not frame questions that contains more than 15 words. Use abbreviation wherever possible.
-3. Make sure the question is clear and unambiguous. 
-4. phrases like 'based on the provided context','according to the context',etc are not allowed to appear in the question.
+    Stelle hypothetische Szenarien dar: Präsentiere eine hypothetische Situation oder ein Szenario, das die Kombination verschiedener Elemente aus dem Kontext erfordert, um zu einer Antwort zu gelangen.
 
-question: {question}
-CONTEXTS:
+Regeln, die beim Umschreiben der Frage zu beachten sind:
+
+    1. Stelle sicher, dass die umgeschriebene Frage vollständig anhand der Informationen im Kontext beantwortet werden kann.
+    2. Formuliere keine Fragen, die mehr als 15 Wörter enthalten. Verwende Abkürzungen, wo immer möglich.
+    3. Achte darauf, dass die Frage klar und eindeutig ist.
+    4. Ausdrücke wie 'basierend auf dem gegebenen Kontext', 'gemäß dem Kontext' usw. dürfen in der Frage nicht vorkommen.
+Frage: {question}
+Kontext:
 {context}
 
-Multi-hop Reasoning Question:
+Mehr-Schrittige Frage:
 """  # noqa: E501
 )
 
 MULTICONTEXT_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-You are a prompt rewriter. You will be provided with a question and two set of contexts namely context1 and context2. 
-Your task is to complicate the given question in a way that answering it requires information derived from both context1 and context2. 
-Follow the rules given below while rewriting the question.
-    1. The rewritten question should not be very long. Use abbreviation wherever possible.
-    2. The rewritten question must be reasonable and must be understood and responded by humans.
-    3. The rewritten question must be fully answerable from information present in context1 and context2. 
-    4. Read and understand both contexts and rewrite the question so that answering requires insight from both context1 and context2.
-    5. phrases like 'based on the provided context','according to the context?',etc are not allowed to appear in the question.
+Du bist ein Prompt-Umschreiber. Dir wird eine Frage sowie zwei Kontexte, nämlich Kontext1 und Kontext2, zur Verfügung gestellt.
+Deine Aufgabe ist es, die gegebene Frage so zu verkomplizieren, dass zu ihrer Beantwortung Informationen aus sowohl Kontext1 als auch Kontext2 erforderlich sind.
+Befolge die unten angegebenen Regeln beim Umschreiben der Frage:
+1. Die umgeschriebene Frage sollte nicht zu lang sein. Verwende Abkürzungen, wo immer möglich.
+2. Die umgeschriebene Frage muss vernünftig sein und von Menschen verstanden und beantwortet werden können.
+3. Die umgeschriebene Frage muss vollständig anhand der Informationen in Kontext1 und Kontext2 beantwortbar sein.
+4. Lies und verstehe beide Kontexte und schreibe die Frage so um, dass zur Beantwortung Einblicke aus beiden Kontexten erforderlich sind.
+5. Ausdrücke wie 'basierend auf dem gegebenen Kontext', 'gemäß dem Kontext', etc. dürfen in der Frage nicht vorkommen.
 
-question:\n{question}
-context1:\n{context1}
-context2:\n{context2}
+Frage:\n{question}
+Kontext 1:\n{context1}
+Kontext 2:\n{context2}
 """  # noqa: E501
 )
 
 
 CONDITIONAL_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-Rewrite the provided question to increase its complexity by introducing a conditional element.
-The goal is to make the question more intricate by incorporating a scenario or condition that affects the context of the question.
-Follow the rules given below while rewriting the question.
-    1. The rewritten question should not be longer than 25 words. Use abbreviation wherever possible.
-    2. The rewritten question must be reasonable and must be understood and responded by humans.
-    3. The rewritten question must be fully answerable from information present context.
-    4. phrases like 'provided context','according to the context?',etc are not allowed to appear in the question.
-for example,
-question: What are the general principles for designing prompts in LLMs?
-Rewritten Question:how to apply prompt designing principles to improve LLMs performance in reasoning tasks
+Schreibe die gestellte Frage um, um ihre Komplexität zu erhöhen, indem du ein bedingtes Element einführt.
+Das Ziel ist es, die Frage durch Einführung eines Szenarios oder einer Bedingung, die den Kontext der Frage beeinflusst, komplizierter zu gestalten.
+Befolge die unten angegebenen Regeln beim Umschreiben der Frage.
+1. Die umgeschriebene Frage sollte nicht länger als 25 Wörter sein. Verwende Abkürzungen, wo immer möglich.
+2. Die umgeschriebene Frage muss vernünftig sein und von Menschen verstanden und beantwortet werden können.
+3. Die umgeschriebene Frage muss vollständig anhand der Informationen im Kontext beantwortbar sein.
+4. Ausdrücke wie 'gegebener Kontext', 'gemäß dem Kontext?', etc. dürfen in der Frage nicht vorkommen.
+Zum Beispiel,
+Frage: Was sind die allgemeinen Prinzipien für das Entwerfen von Prompts in LLMs?
+Umgewandelte Frage: Wie wendet man Gestaltungsprinzipien von Prompts an, um die Leistung von LLMs in Aufgaben des logischen Denkens zu verbessern?
 
-question:{question}
-context:\n{context}
-Rewritten Question
+Frage:{question}
+Kontext:\n{context}
+Umgeschriebene Frage
 """  # noqa: E501
 )
 
 
 COMPRESS_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-Rewrite the following question to make it more indirect and shorter while retaining the essence of the original question. The goal is to create a question that conveys the same meaning but in a less direct manner.
-The rewritten question should shorter so use abbreviation wherever possible.
-Original Question:
+Umschreibe die folgende Frage, um sie indirekter und kürzer zu gestalten, während du das Wesen der ursprünglichen Frage beibehältst. Das Ziel ist es, eine Frage zu erstellen, die dieselbe Bedeutung vermittelt, jedoch auf eine weniger direkte Weise.
+Die umgeschriebene Frage sollte kürzer sein, also verwende Abkürzungen, wo immer möglich.
+Orginale Frage:
 {question}
 
-Indirectly Rewritten Question:
+Indirekt umgeschriebene Frage:
 """  # noqa: E501
 )
 
 
 CONVERSATION_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-Reformat the provided question into two separate questions as if it were to be part of a conversation. Each question should focus on a specific aspect or subtopic related to the original question.
-question: What are the advantages and disadvantages of remote work?
-Reformatted Questions for Conversation: What are the benefits of remote work?\nOn the flip side, what challenges are encountered when working remotely?
-question:{question}
+Formatiere die gestellte Frage in zwei separate Fragen um, als ob sie Teil eines Gesprächs wären. Jede Frage sollte sich auf einen bestimmten Aspekt oder ein Unterthema im Zusammenhang mit der ursprünglichen Frage konzentrieren.
+Frage: Was sind die Vor- und Nachteile von Heimarbeit?
+Neu formatierte Fragen für ein Gespräch: Was sind die Vorteile von Heimarbeit?\nUnd auf der anderen Seite, welche Herausforderungen ergeben sich bei der Arbeit aus der Ferne?
+Frage:{question}
 
-Reformatted Questions for Conversation:
+Neu Formatierte Frage für ein Gespräch:
 """  # noqa: E501
 )
 
 SCORE_CONTEXT = HumanMessagePromptTemplate.from_template(
-    """Evaluate the provided context and assign a numerical score between 0 and 10 based on the following criteria:
-1. Award a high score to context that thoroughly delves into and explains concepts.
-2. Assign a lower score to context that contains excessive references, acknowledgments, external links, personal information, or other non-essential elements.
-Output the score only.
-Context:
+    """Bewerte den gegebenen Kontext und weise eine numerische Punktzahl zwischen 0 und 10 basierend auf den folgenden Kriterien zu:
+
+    Vergib eine hohe Punktzahl für Kontexte, die gründlich in Konzepte eintauchen und diese erklären.
+    Weise eine niedrigere Punktzahl für Kontexte zu, die übermäßige Referenzen, Danksagungen, externe Links, persönliche Informationen oder andere nicht wesentliche Elemente enthalten.
+    Gib nur die Punktzahl aus.
+Kontext:
 {context}
-Score:
+Punktzahl:
 """  # noqa: E501
 )
 
 FILTER_QUESTION = HumanMessagePromptTemplate.from_template(
     """\
-Determine if the given question can be clearly understood even when presented without any additional context. Specify reason and verdict is a valid json format.
-question: What is the keyword that best describes the paper's focus in natural language understanding tasks?
-{{"reason":"The specific paper being referred to is not mentioned in the question.", "verdict": "No"}}
-question:{question}
+Bestimme, ob die gestellte Frage auch ohne zusätzlichen Kontext klar verstanden werden kann. Gib Grund und Urteil im gültigen JSON-Format an.
+Frage: Was ist das Schlüsselwort, das den Schwerpunkt des Papiers bei Aufgaben des natürlichen Sprachverstehens am besten beschreibt?
+{{"reason":"Das spezifische, in der Frage angesprochene Papier wird nicht erwähnt.", "verdict": "Nein"}}
+Frage: {question}
 """  # noqa: E501
 )
 
 
 ANSWER_FORMULATE = HumanMessagePromptTemplate.from_template(
     """\
-Answer the question using the information from the given context. 
-question:{question}
-context:{context}
-answer:
+Beantworte die Frage, nutze dabei die Informationen des Kontexts.
+Frage:{question}
+Kontext:{context}
+Antwort:
 """  # noqa: E501
 )
 
 CONTEXT_FORMULATE = HumanMessagePromptTemplate.from_template(
-    """Please extract relevant sentences from the provided context that can potentially help answer the following question. While extracting candidate sentences you're not allowed to make any changes to sentences from given context.
+    """Bitte extrahiere relevante Sätze aus dem gegebenen Kontext, die potenziell helfen können, die folgende Frage zu beantworten. Beim Extrahieren von Kandidatensätzen darfst du keine Änderungen an den Sätzen aus dem gegebenen Kontext vornehmen.
 
-question:{question}
-context:\n{context}
-candidate sentences:\n
+Frage:{question}
+Kontext:\n{context}
+Kandidat Satz:\n
 """  # noqa: E501
 )

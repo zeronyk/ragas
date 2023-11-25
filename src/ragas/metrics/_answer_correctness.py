@@ -61,15 +61,14 @@ class AnswerCorrectness(MetricWithLLM):
             ds_faithfulness = dataset.remove_columns(["contexts"])
         else:
             ds_faithfulness = dataset
-
         ds_faithfulness = ds_faithfulness.rename_columns({"ground_truths": "contexts"})
         faith_scores = self.faithfulness._score_batch(ds_faithfulness)  # type: ignore
         similarity_scores = self.answer_similarity._score_batch(dataset)  # type: ignore
-
         scores_stacked = np.vstack([faith_scores, similarity_scores])
         scores = np.average(
             scores_stacked,
             axis=0,
+           
             weights=self.weights,
         )
 

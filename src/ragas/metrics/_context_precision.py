@@ -13,24 +13,23 @@ from ragas.utils import load_as_json
 
 CONTEXT_PRECISION = HumanMessagePromptTemplate.from_template(
     """\
-Verify if the information in the given context is useful in answering the question.
+Überprüfe, ob die Informationen im gegebenen Kontext nützlich sind, um die Frage zu beantworten.
 
-question: What are the health benefits of green tea?
-context: 
-This article explores the rich history of tea cultivation in China, tracing its roots back to the ancient dynasties. It discusses how different regions have developed their unique tea varieties and brewing techniques. The article also delves into the cultural significance of tea in Chinese society and how it has become a symbol of hospitality and relaxation.
-verification:
-{{"reason":"The context, while informative about the history and cultural significance of tea in China, does not provide specific information about the health benefits of green tea. Thus, it is not useful for answering the question about health benefits.", "verdict":"No"}}
+Frage: Welche gesundheitlichen Vorteile hat grüner Tee?
+Kontext:
+Dieser Artikel erkundet die reiche Geschichte des Teeanbaus in China und verfolgt seine Wurzeln zurück zu den alten Dynastien. Er diskutiert, wie verschiedene Regionen ihre einzigartigen Teesorten und Brautechniken entwickelt haben. Der Artikel geht auch auf die kulturelle Bedeutung des Tees in der chinesischen Gesellschaft ein und wie er zu einem Symbol für Gastfreundschaft und Entspannung geworden ist.
+Überprüfung:
+{{"reason":"Der Kontext, obwohl informativ über die Geschichte und kulturelle Bedeutung des Tees in China, liefert keine spezifischen Informationen über die gesundheitlichen Vorteile von grünem Tee. Daher ist er nicht nützlich, um die Frage nach den gesundheitlichen Vorteilen zu beantworten.", "verdict":"Nein"}}
 
-question: How does photosynthesis work in plants?
-context:
-Photosynthesis in plants is a complex process involving multiple steps. This paper details how chlorophyll within the chloroplasts absorbs sunlight, which then drives the chemical reaction converting carbon dioxide and water into glucose and oxygen. It explains the role of light and dark reactions and how ATP and NADPH are produced during these processes.
-verification:
-{{"reason":"This context is extremely relevant and useful for answering the question. It directly addresses the mechanisms of photosynthesis, explaining the key components and processes involved.", "verdict":"Yes"}}
-
-question:{question}
-context:
+Frage: Wie funktioniert Photosynthese bei Pflanzen?
+Kontext:
+Photosynthese in Pflanzen ist ein komplexer Prozess, der mehrere Schritte umfasst. Dieses Papier erläutert, wie Chlorophyll in den Chloroplasten Sonnenlicht absorbiert, welches dann die chemische Reaktion antreibt, die Kohlendioxid und Wasser in Glukose und Sauerstoff umwandelt. Es erklärt die Rolle von Licht- und Dunkelreaktionen und wie ATP und NADPH während dieser Prozesse produziert werden.
+Überprüfung:
+{{"reason":"Dieser Kontext ist äußerst relevant und nützlich, um die Frage zu beantworten. Er geht direkt auf die Mechanismen der Photosynthese ein und erklärt die Schlüsselkomponenten und Prozesse, die daran beteiligt sind.", "verdict":"Ja"}}
+Frage:{question}
+Kontext:
 {context}
-verification:"""  # noqa: E501
+Überprüfung:"""  # noqa: E501
 )
 
 

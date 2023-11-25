@@ -13,52 +13,52 @@ from ragas.metrics.base import EvaluationMode, MetricWithLLM
 
 CONTEXT_RECALL_RA = HumanMessagePromptTemplate.from_template(
     """
-Given a context, and an answer, analyze each sentence in the answer and classify if the sentence can be attributed to the given context or not. Output json with reason.
+Gegeben einen Kontext und eine Antwort, analysiere jeden Satz in der Antwort und klassifiziere, ob der Satz dem gegebenen Kontext zugeordnet werden kann oder nicht. Gib das Ergebnis im JSON-Format mit Begründung aus.
 
-
-question: What can you tell me about albert Albert Einstein?
-context: Albert Einstein (14 March 1879 – 18 April 1955) was a German-born theoretical physicist,widely held to be one of the greatest and most influential scientists of all time. Best known for developing the theory of relativity, he also made important contributions to quantum mechanics, and was thus a central figure in the revolutionary reshaping of the scientific understanding of nature that modern physics accomplished in the first decades of the twentieth century. His mass–energy equivalence formula E = mc2, which arises from relativity theory, has been called "the world's most famous equation". He received the 1921 Nobel Prize in Physics "for his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect", a pivotal step in the development of quantum theory. His work is also known for its influence on the philosophy of science. In a 1999 poll of 130 leading physicists worldwide by the British journal Physics World, Einstein was ranked the greatest physicist of all time. His intellectual achievements and originality have made Einstein synonymous with genius.
-answer: Albert Einstein born in 14 March 1879 was  German-born theoretical physicist, widely held to be one of the greatest and most influential scientists of all time. He received the 1921 Nobel Prize in Physics "for his services to theoretical physics. He published 4 papers in 1905.  Einstein moved to Switzerland in 1895 
-classification:
+Frage: Was können Sie mir über Albert Einstein erzählen?
+Kontext: Albert Einstein (14. März 1879 – 18. April 1955) war ein in Deutschland geborener theoretischer Physiker, der weithin als einer der größten und einflussreichsten Wissenschaftler aller Zeiten angesehen wird. Bekannt wurde er vor allem durch die Entwicklung der Relativitätstheorie, er leistete jedoch auch wichtige Beiträge zur Quantenmechanik und war somit eine zentrale Figur bei der revolutionären Neugestaltung des wissenschaftlichen Verständnisses der Natur, die die moderne Physik in den ersten Jahrzehnten des zwanzigsten Jahrhunderts vollbrachte. Seine Massen-Energie-Äquivalenzformel E = mc2, die sich aus der Relativitätstheorie ergibt, wurde als "die berühmteste Gleichung der Welt" bezeichnet. Er erhielt 1921 den Nobelpreis für Physik "für seine Verdienste um die theoretische Physik und insbesondere für seine Entdeckung des photoelektrischen Effekts", ein entscheidender Schritt in der Entwicklung der Quantentheorie. Seine Arbeit ist auch bekannt für ihren Einfluss auf die Wissenschaftsphilosophie. In einer Umfrage aus dem Jahr 1999 unter 130 führenden Physikern weltweit von der britischen Zeitschrift Physics World wurde Einstein zum größten Physiker aller Zeiten gewählt. Seine intellektuellen Leistungen und seine Originalität haben Einstein zum Synonym für Genie gemacht.
+Antwort: Albert Einstein, geboren am 14. März 1879, war ein in Deutschland geborener theoretischer Physiker, der weithin als einer der größten und einflussreichsten Wissenschaftler aller Zeiten angesehen wird. Er erhielt den Nobelpreis für Physik 1921 "für seine Verdienste um die theoretische Physik. Er veröffentlichte 1905 4 Arbeiten. Einstein zog 1895 in die Schweiz.
+Klassifikation:
 [
-    {{  "statement_1":"Albert Einstein, born on 14 March 1879, was a German-born theoretical physicist, widely held to be one of the greatest and most influential scientists of all time.",
-        "reason": "The date of birth of Einstein is mentioned clearly in the context.",
-        "Attributed": "Yes"
-    }},
-    {{
-        "statement_2":"He received the 1921 Nobel Prize in Physics 'for his services to theoretical physics.",
-        "reason": "The exact sentence is present in the given context.",
-        "Attributed": "Yes"
-    }},
-    {{
-        "statement_3": "He published 4 papers in 1905.",
-        "reason": "There is no mention about papers he wrote in the given context.",
-        "Attributed": "No"
-    }},
-    {{
-        "statement_4":"Einstein moved to Switzerland in 1895.",
-        "reason": "There is no supporting evidence for this in the given context.",
-        "Attributed": "No"
-    }}
+{{
+"statement_1":"Albert Einstein, geboren am 14. März 1879, war ein in Deutschland geborener theoretischer Physiker, weithin als einer der größten und einflussreichsten Wissenschaftler aller Zeiten angesehen.",
+"reason": "Das Geburtsdatum von Einstein wird im Kontext deutlich erwähnt.",
+"Attributed": "Ja"
+}},
+{{
+"statement_2":"Er erhielt 1921 den Nobelpreis für Physik 'für seine Verdienste um die theoretische Physik.",
+"reason": "Der exakte Satz ist im gegebenen Kontext vorhanden.",
+"Attributed": "Ja"
+}},
+{{
+"statement_3": "Er veröffentlichte 1905 4 Arbeiten.",
+"reason": "Es gibt keine Erwähnung der von ihm geschriebenen Arbeiten im gegebenen Kontext.",
+"Attributed": "Nein"
+}},
+{{
+"statement_4":"Einstein zog 1895 in die Schweiz.",
+"reason": "Es gibt keine stützenden Beweise dafür im gegebenen Kontext.",
+"Attributed": "Nein"
+}}
 ]
 
-question: who won 2020 icc world cup?
-context: Who won the 2022 ICC Men's T20 World Cup?
-The 2022 ICC Men's T20 World Cup, held from October 16 to November 13, 2022, in Australia, was the eighth edition of the tournament. Originally scheduled for 2020, it was postponed due to the COVID-19 pandemic. England emerged victorious, defeating Pakistan by five wickets in the final to clinch their second ICC Men's T20 World Cup title.
-answer: England 
-classification:
+Frage: Wer hat den ICC Weltcup 2020 gewonnen?
+Kontext: Wer gewann den ICC Men's T20 World Cup 2022?
+Der ICC Men's T20 World Cup 2022, der vom 16. Oktober bis zum 13. November 2022 in Australien stattfand, war die achte Ausgabe des Turniers. Ursprünglich für 2020 geplant, wurde es aufgrund der COVID-19-Pandemie verschoben. England ging als Sieger hervor und besiegte Pakistan im Finale mit fünf Wickets, um ihren zweiten ICC Men's T20 World Cup-Titel zu gewinnen.
+Antwort: England
+Klassifikation:
 [
-    {{
-        "statement_1":"England won the 2022 ICC Men's T20 World Cup.",
-        "reason": "From context it is clear that England defeated Pakistan to win the World Cup.",
-         "Attributed": "Yes"
-    }}
+{{
+"statement_1":"England gewann den ICC Men's T20 World Cup 2022.",
+"reason": "Aus dem Kontext geht klar hervor, dass England Pakistan besiegte, um den Weltcup zu gewinnen.",
+"Attributed": "Ja"
+}}
 ]
 
-question:{question}
-context:{context}
-answer:{answer}
-classification:
+Frage: {question}
+Kontext:{context}
+Antwort:{answer}
+Klassifikation:
 """  # noqa: E501
 )
 

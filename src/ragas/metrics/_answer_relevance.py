@@ -21,12 +21,12 @@ if t.TYPE_CHECKING:
 
 QUESTION_GEN = HumanMessagePromptTemplate.from_template(
     """
-Generate question for the given answer.
-Answer:\nThe PSLV-C56 mission is scheduled to be launched on Sunday, 30 July 2023 at 06:30 IST / 01:00 UTC. It will be launched from the Satish Dhawan Space Centre, Sriharikota, Andhra Pradesh, India 
-Question: When is the scheduled launch date and time for the PSLV-C56 mission, and where will it be launched from?
+Erstelle eine Frage für die gegebene Antwort.
+Antwort:\nDie PSLV-C56-Mission ist geplant, am Sonntag, den 30. Juli 2023 um 06:30 IST / 01:00 UTC gestartet zu werden. Der Start erfolgt vom Satish Dhawan Space Centre, Sriharikota, Andhra Pradesh, Indien.
+Frage: Wann ist der geplante Starttermin und die Uhrzeit für die PSLV-C56-Mission, und von wo aus wird sie gestartet?
 
-Answer:{answer}
-Question:
+Antwort:{answer}
+Frage:
 """  # noqa: E501
 )
 

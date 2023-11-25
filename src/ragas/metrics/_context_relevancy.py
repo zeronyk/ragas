@@ -15,11 +15,11 @@ from ragas.metrics.base import EvaluationMode, MetricWithLLM
 
 CONTEXT_RELEVANCE = HumanMessagePromptTemplate.from_template(
     """\
-Please extract relevant sentences from the provided context that is absolutely required answer the following question. If no relevant sentences are found, or if you believe the question cannot be answered from the given context, return the phrase "Insufficient Information".  While extracting candidate sentences you're not allowed to make any changes to sentences from given context.
+Bitte extrahiere relevante Sätze aus dem gegebenen Kontext, die unbedingt erforderlich sind, um die folgende Frage zu beantworten. Wenn keine relevanten Sätze gefunden werden oder wenn du der Meinung bist, dass die Frage aus dem gegebenen Kontext nicht beantwortet werden kann, gib den Ausdruck 'Unzureichende Informationen' zurück. Beim Extrahieren von Kandidatensätzen darfst du keine Änderungen an den Sätzen aus dem gegebenen Kontext vornehmen.
 
-question:{question}
-context:\n{context}
-candidate sentences:\n"""  # noqa: E501
+Frage:{question}
+Kontext:\n{context}
+Kandidatensatz:\n"""  # noqa: E501
 )
 
 seg = pysbd.Segmenter(language="en", clean=False)

@@ -16,93 +16,93 @@ if t.TYPE_CHECKING:
 
 LONG_FORM_ANSWER_PROMPT = HumanMessagePromptTemplate.from_template(
     """\
-Create one or more statements from each sentence in the given answer.
+Erstelle eine oder mehrere Aussagen aus jedem Satz in der gegebenen Antwort.
 
-question: Who was  Albert Einstein and what is he best known for?
-answer: He was a German-born theoretical physicist, widely acknowledged to be one of the greatest and most influential physicists of all time. He was best known for developing the theory of relativity, he also made important contributions to the development of the theory of quantum mechanics.
-statements in json:
+Frage: Wer war Albert Einstein und wofür ist er am bekanntesten?
+Antwort: Er war ein in Deutschland geborener theoretischer Physiker, der weithin als einer der größten und einflussreichsten Physiker aller Zeiten anerkannt wird. Er war am besten bekannt für die Entwicklung der Relativitätstheorie, er leistete auch wichtige Beiträge zur Entwicklung der Quantenmechanik.
+statements in JSON:
 {{
-    "statements": [
-        "Albert Einstein was born in Germany.",
-        "Albert Einstein was best known for his theory of relativity."
-    ]
+"statements": [
+"Albert Einstein wurde in Deutschland geboren.",
+"Albert Einstein war am besten bekannt für seine Relativitätstheorie."
+]
 }}
 
-question: Cadmium Chloride is slightly soluble in this chemical, it is also called what?
-answer: alcohol
-statements in json:
+Frage: Cadmiumchlorid ist in dieser Chemikalie leicht löslich, es wird auch wie genannt?
+Antwort: Alkohol
+statements in JSON:
 {{
-    "statements": [
-        "Cadmium Chloride is slightly soluble in alcohol."
-    ]
+"statements": [
+"Cadmiumchlorid ist leicht löslich in Alkohol."
+]
 }}
 
-question: Were Shahul and Jithin of the same nationality?
-answer: They were from different countries.
-statements in json:
+Frage: Waren Shahul und Jithin derselben Nationalität?
+Antwort: Sie stammten aus verschiedenen Ländern.
+statements as JSON:
 {{
-    "statements": [
-        "Shahul and Jithin were from different countries."
-    ]
+"statements": [
+"Shahul und Jithin stammten aus verschiedenen Ländern."
+]
 }}
 
-question:{question}
-answer: {answer}
-statements in json:"""  # noqa: E501
+Frage:{question}
+Antwort: {answer}
+statements in JSON:"""  # noqa: E501
 )
 
 
 NLI_STATEMENTS_MESSAGE = HumanMessagePromptTemplate.from_template(
     """
- Natural language inference
-
-Context:
-John is a student at XYZ University. He is pursuing a degree in Computer Science. He is enrolled in several courses this semester, including Data Structures, Algorithms, and Database Management. John is a diligent student and spends a significant amount of time studying and completing assignments. He often stays late in the library to work on his projects.
-statement_1: John is majoring in Biology.
-statement_2: John is taking a course on Artificial Intelligence. 
-statement_3: John is a dedicated student. 
-statement_4: John has a part-time job.
-Answer:
+Natürliche Sprachinferenz, 
+Betrachten Sie den gegebenen Kontext und die folgenden Aussagen, und bestimmen Sie dann, ob sie durch die Informationen im Kontext gestützt werden. Geben Sie eine kurze Erklärung für jede Aussage ab, bevor Sie zu einem Urteil (Ja/Nein) kommen. Geben Sie am Ende ein abschließendes Urteil für jede Aussage in der angegebenen Reihenfolge und im vorgegebenen Format an. Weichen Sie nicht von dem festgelegten Format ab.
+Schreibe unbedingt korrektes JSON, achte auf Kommata.
+Kontext:
+John ist Student an der XYZ Universität. Er studiert Informatik. Dieses Semester hat er sich für mehrere Kurse eingeschrieben, darunter Datenstrukturen, Algorithmen und Datenbankmanagement. John ist ein fleißiger Student und verbringt viel Zeit mit Studieren und Erledigen von Aufgaben. Er bleibt oft spät in der Bibliothek, um an seinen Projekten zu arbeiten.
+statement_1: John hat sich auf Biologie spezialisiert.
+statement_2: John besucht einen Kurs über Künstliche Intelligenz.
+statement_3: John ist ein engagierter Student.
+statement_4: John hat einen Teilzeitjob.
+Antwort:
 [
-    {{
-        "statement_1": "John is majoring in Biology.",
-        "reason": "John's major is explicitly mentioned as Computer Science. There is no information suggesting he is majoring in Biology.",
-        "verdict": "No"
-    }},
-    {{
-        "statement_2": "John is taking a course on Artificial Intelligence.",
-        "reason": "The context mentions the courses John is currently enrolled in, and Artificial Intelligence is not mentioned. Therefore, it cannot be deduced that John is taking a course on AI.",
-        "verdict": "No"
-    }},
-    {{
-        "statement_3": "John is a dedicated student.",
-        "reason": "The context states that he spends a significant amount of time studying and completing assignments. Additionally, it mentions that he often stays late in the library to work on his projects, which implies dedication.",
-        "verdict": "Yes"
-    }},
-    {{
-        "statement_4": "John has a part-time job.",
-        "reason": "There is no information given in the context about John having a part-time job.",
-        "verdict": "No"
-    }}
+{{
+"statement_1": "John hat sich auf Biologie spezialisiert.",
+"reason": "Johns Hauptfach wird explizit als Informatik genannt. Es gibt keine Informationen, die darauf hindeuten, dass er sich auf Biologie spezialisiert hat.",
+"verdict": "Nein"
+}},
+{{
+"statement_2": "John besucht einen Kurs über Künstliche Intelligenz.",
+"reason": "Der Kontext nennt die Kurse, für die John derzeit eingeschrieben ist, und Künstliche Intelligenz wird nicht erwähnt. Daher kann nicht gefolgert werden, dass John einen Kurs über KI besucht.",
+"verdict": "Nein"
+}},
+{{
+"statement_3": "John ist ein engagierter Student.",
+"reason": "Im Kontext wird erwähnt, dass er viel Zeit mit Studieren und Erledigen von Aufgaben verbringt. Außerdem wird erwähnt, dass er oft spät in der Bibliothek bleibt, um an seinen Projekten zu arbeiten, was auf Engagement hindeutet.",
+"verdict": "Ja"
+}},
+{{
+"statement_4": "John hat einen Teilzeitjob.",
+"reason": "Im Kontext gibt es keine Informationen darüber, dass John einen Teilzeitjob hat.",
+"verdict": "Nein"
+}}
 ]
 
-Context:
-Photosynthesis is a process used by plants, algae, and certain bacteria to convert light energy into chemical energy.
-statement_1: Answer not found in given context
-Answer:
+Kontext:
+Fotosynthese ist ein Prozess, der von Pflanzen, Algen und bestimmten Bakterien verwendet wird, um Lichtenergie in chemische Energie umzuwandeln.
+statement_1: Antwort nicht im gegebenen Kontext gefunden
+Antwort:
 [
-     {{
-        "statement_4": "Answer not found in given context",
-        "reason": "The context does not provide enough information to determine the validity of the statement."
-        "verdict": "NULL"
-    }}
+{{
+"statement_4": "Antwort nicht im gegebenen Kontext gefunden",
+"reason": "Der Kontext liefert nicht genügend Informationen, um die Gültigkeit der Aussage zu bestimmen.",
+"verdict": "NULL"
+}}
 ]
 
 
-
-context:
+Kontext:
 {context}
-statements:
+Aussagen:
 {statements}
 Answer:
 """  # noqa: E501
@@ -136,7 +136,6 @@ class Faithfulness(MetricWithLLM):
                 prompts.append(ChatPromptTemplate.from_messages([human_prompt]))
 
             result = self.llm.generate(prompts, callbacks=batch_group)
-
             prompts = []
             for context, output in zip(contexts, result.generations):
                 statements = load_as_json(output[0].text).get("statements", [])
@@ -150,8 +149,14 @@ class Faithfulness(MetricWithLLM):
                 prompts.append(ChatPromptTemplate.from_messages([human_prompt]))
 
             result = self.llm.generate(prompts, callbacks=batch_group)
+            # write this into a fileo
             outputs = result.generations
-            verdict_score_map = {"yes": 1, "no": 0, "null": np.nan}
+            output_text = "\n".join([str(o) for o in outputs])  # Convert outputs to string
+            file_path = "/home/hermel/Documents/Metis-Demo/optimizing_tt/faithful_debug/debug.txt"
+            with open(file_path, 'a') as f:  # Open file in append mode
+                f.write(output_text)
+                f.write("\n") 
+            verdict_score_map = {"ja": 1, "nein": 0, "null": np.nan}
             scores = []
             for output in outputs:
                 output = load_as_json(output[0].text)
